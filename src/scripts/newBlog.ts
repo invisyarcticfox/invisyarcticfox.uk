@@ -3,7 +3,7 @@ import type { blogEntries } from '@/types'
 
 (async () => {
   try {
-    const res = await fetch('https://api.invisyarcticfox.uk/blogs')
+    const res = await fetch('https://blog.invisyarcticfox.uk/blogs.json')
     const [latest]:blogEntries = await res.json()
     const lsLastSeen = localStorage.getItem('lastSeenPost')
     const blogLink = document.querySelector<HTMLAnchorElement>('.links ul li a[href="https://blog.invisyarcticfox.uk"]')!

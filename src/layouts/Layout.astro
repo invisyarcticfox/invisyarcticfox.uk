@@ -1,5 +1,5 @@
 ---
-interface Props { title: string, head: string }
+interface Props { title:string, head:string }
 const { title, head } = Astro.props
 const PgTt = `ItAF - ${title}`
 const isIndex = Astro.url.pathname === '/'
@@ -10,7 +10,9 @@ const isIndex = Astro.url.pathname === '/'
 	<head>
 		<meta charset='UTF-8' />
 		<meta name='viewport' content='width=device-width' />
-		<link rel='icon' type='image/png' href='/favicon.svg' />
+		<link rel='icon' href='/favicon.ico' />
+		<link rel='icon' href='/favicon.svg' type='image/svg+xml'>
+		<link rel='icon' href='/favicon.png' type='image/png' />
 		<meta name='generator' content={Astro.generator} />
 		<title>{isIndex ? 'ItAF' : PgTt}</title>
 		<link rel='stylesheet' href='/master.css'>
@@ -22,7 +24,7 @@ const isIndex = Astro.url.pathname === '/'
 		<meta name='keywords' content='invisyarcticfox, invisy arcticfox, invisy arctic fox'>
 		<meta name='image' content='https://cdn.invisyarcticfox.uk/img/embedbanner.png'>
 		<meta name='author' content='invisyarcticfox'>
-		<meta name='theme-color' content='#00aa00'>
+		<meta name='theme-color' content='#a6e3a1'>
 		<meta name='robots' content='index, follow'>
 		<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 		<meta name='language' content='English'>

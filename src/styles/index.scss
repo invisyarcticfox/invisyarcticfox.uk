@@ -27,7 +27,7 @@ main { width: 50%; margin: 0 auto; padding-top: 100px; }
     left: 90%;
     font-size: 0.8em;
     background: hsl(from var(--bg) h s calc(l / 2));
-    padding: 5px 15px 5px 30px;
+    padding: 5px 15px 5px var(--radius);
     border-radius: 0 var(--radius) var(--radius) 0;
     display: flex;
     align-items: center;
@@ -40,7 +40,7 @@ main { width: 50%; margin: 0 auto; padding-top: 100px; }
       border-right: 1px var(--fg) solid;
       width: 1.2em;
       height: 1.2em;
-      margin: 0 5px 0 0;
+      margin: 0 5px;
       padding: 0 5px 0 0;
       svg {
         fill: var(--fg);
