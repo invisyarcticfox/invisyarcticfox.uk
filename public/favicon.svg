@@ -1,0 +1,8 @@
+<svg width='512' height='512' viewBox='0 0 24 24' version='1.0' id='fox' xml:space='preserve' xmlns='http://www.w3.org/2000/svg' xmlns:svg='http://www.w3.org/2000/svg'>
+  <rect id='bg' style='fill:#000000;' width='24' height='24' rx='20%' ry='20%'/>
+  <g id='main'>
+    <path id='outline' style='fill:#000000;stroke:#ffffff;stroke-width:0.70;stroke-linecap:square;' d='M 12,7.03125 H 9.84375 L 4.875,3.75 v 5.8125 l 0.75,0.5625 -2.0625,2.8125 4.875,2.4375 2.0625,3.5625 1.5,1.408971 M 12,7.03125 h 2.15625 L 19.125,3.75 v 1.3125 l -0.375,0.75 0.375,0.75 -0.375,0.75 0.375,0.75 -0.375,0.75 0.375,0.75 -0.75,0.5625 2.0625,2.8125 -4.875,2.4375 L 13.5,18.9375 12,20.346471' />
+    <path id='face' style='fill:#ffffff;stroke:#ffffff;stroke-width:0.5;' d='m 12,18.46875 -1.03125,-2.7e-5 -0.5625,-5.25 L 9.5625,11.8125 7.6875,11.25 l 0.9375,1.125 1.5,0.5625 0.5625,5.34375 -0.02344,0.820313 L 12,20.25 m 0,-1.78125 1.03125,-2.7e-5 0.5625,-5.25 0.84375,-1.406223 1.875,-0.5625 -0.9375,1.125 -1.5,0.5625 -0.5625,5.34375 0.02344,0.820313 L 12,20.25' />
+    <line id='piercing' x1='4' y1='8.25' x2='8.25' y2='5' style='mix-blend-mode:difference;fill:#000000;stroke:#ffffff;stroke-width:0.70;stroke-linecap:square;' />
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+{
+  "name": "invisyarcticfox.uk",
+  "type": "module",
+  "version": "3.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "npm run build && wrangler pages dev ./dist",
+    "deploy": "wrangler pages deploy",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^12.6.12",
+    "@astrojs/sitemap": "^3.6.1",
+    "astro": "^5.16.8"
+  },
+  "devDependencies": {
+    "sass": "^1.97.2",
+    "wrangler": "^4.58.0"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "website",
+  "compatibility_date": "2025-01-05",
+  "compatibility_flags": [ "nodejs_compat" ],
+  "pages_build_output_dir": "./dist"
+}
