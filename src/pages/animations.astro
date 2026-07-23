@@ -1,0 +1,98 @@
+---
+import { env } from 'cloudflare:workers'
+import { siYoutube } from 'simple-icons'
+import Layout from '../layouts/Layout.astro'
+import type { D1 } from '~/types/ext'
+import '~/styles/animations.scss'
+
+type Img = D1.Animations & { url:string }
+
+const { results } = await env.DB.prepare('SELECT * FROM animations ORDER BY date DESC').all<D1.Animations>()
+const anims:Img[] = results.map(photo => ({ ...photo, url: `https://cdn.itaf.uk/blender/${photo.file}` }))
+
+function formatDate(dateString:string) {
+  const date = new Date(dateString)
+  const day = date.getUTCDate()
+
+  const suffix =
+    day % 10 === 1 && day !== 11
+      ? 'st'
+      : day % 10 === 2 && day !== 12
+        ? 'nd'
+        : day % 10 === 3 && day !== 13
+          ? 'rd'
+          : 'th'
+
+  const monthYear = new Intl.DateTimeFormat('en-GB', {
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date)
+
+  return `${day}${suffix} ${monthYear}`
+}
+
+function getYtInfo(url:string) {
+  const match = url.match(/youtu\.be\/([^?]+)/)
+  const id = match?.[1]
+
+  const parsed = new URL(url)
+  const t = parsed.searchParams.get('t')
+  if (!t) return { id, timestamp: null }
+
+  const totalSeconds = parseInt(t, 10)
+  if (Number.isNaN(totalSeconds)) return { id, timestamp: null }
+
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
+
+  return {
+    id,
+    timestamp: `${minutes}:${seconds.toString().padStart(2, '0')}`,
+  }
+}
+---
+
+<Layout title='Animations'>
+  <div class='anims'>
+    {
+      anims.map((anim) => (
+        <div class='anim'>
+          <div class='title'>{anim.title}</div>
+          <video src={anim.url} controls />
+          <div class='info'>
+            <div class='date'>{formatDate(anim.date)}</div>
+            {
+              anim.source && (
+                <div class='source'>
+                  {
+                    (() => {
+                      const yt = getYtInfo(anim.source)
+                      return (
+                        <a href={anim.source} target='_blank' rel='noopener noreferrer'>
+                          <span class='icn' set:html={siYoutube.svg} />/
+                          <b>{yt.id}</b>{yt.timestamp && <>@<i>{yt.timestamp}</i></>}
+                        </a>
+                      )
+                    })()
+                  }
+                </div>
+              )
+            }
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</Layout>
+
+<script is:inline>
+  function setupVideos() {
+    document.querySelectorAll('.anim video').forEach(video => {
+      video.load()
+      video.addEventListener('loadedmetadata', () => video.volume = 0.5 )
+    })
+  }
+  setupVideos()
+  document.addEventListener('astro:after-swap', setupVideos)
+</script>

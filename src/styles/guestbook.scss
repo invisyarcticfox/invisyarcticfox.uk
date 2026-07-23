@@ -1,0 +1,65 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin: 0 auto;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    font-size: .5rem;
+    
+    input { font-size: 1.25em; width: 75%; }
+
+    .msg {
+      position: relative;
+      textarea { font-size: 1.5em; height: 4em; min-height: 2em; max-height: 6em; width: 100%; resize: vertical; box-sizing: border-box; }
+      .counter {
+        &.danger { color: hsl(from var(--ctp-red) h s calc(l / 1.5)); opacity: 1; }
+        position: absolute; right: 20px; bottom: 0; font-size: 1.25em; color: var(--bg); opacity: .75;
+      }
+    }
+
+    button {
+      &[disabled] { cursor: not-allowed; }
+      font-size: 1.25em;
+    }
+
+    .status { font-size: 1.25em; }
+  }
+}
+
+.gbs {
+  width: 30%;
+  margin: 0 auto;
+
+  .entry {
+    margin: 20px 0;
+    padding: 5px 10px;
+    border: 3px solid var(--fg);
+    border-radius: calc(var(--rad) /2);
+
+    .top {
+      &::after {
+        display: block;
+        position: absolute;
+        content: '';
+        width: 15%;
+        height: 2px;
+        background: var(--fg);
+        left: 0;
+        bottom: 0;
+      }
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+
+      .name { font-weight: bold; max-width: 40%; overflow-x: auto; }
+      time { font-size: .75em; opacity: .75; }
+    }
+
+    .msg { max-height: 6rem; overflow-y: auto; font-size: .9rem; }
+  }
+}

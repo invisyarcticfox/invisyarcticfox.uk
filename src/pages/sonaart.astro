@@ -1,0 +1,45 @@
+---
+import { Image, getImage } from 'astro:assets'
+import { env } from 'cloudflare:workers'
+import Layout from '../layouts/Layout.astro'
+import type { D1 } from '~/types/ext'
+
+import '~/styles/sonaart.scss'
+
+type Img = D1.SonaArt & { url:string, high:string, low:string }
+
+const { results } = await env.DB.prepare('SELECT * FROM sonaart WHERE disabled = 0 AND freaky = 0 AND ref = 0 ORDER BY date DESC').all<D1.SonaArt>()
+const imgs:Img[] = await Promise.all(
+  results.map(async photo => {
+    const url = `https://cdn.itaf.uk/art/${photo.file}`
+    const high = await getImage({ src: url, width: 720, height: Math.round((photo.height / photo.width) * 720),  quality: 80, format: 'webp' })
+    const low = await getImage({ src: url, width: 240, height: Math.round((photo.height / photo.width) * 240), quality: 50, format: 'jpg' })
+
+    return {
+      ...photo,
+      url,
+      high: high.src,
+      low: low.src
+    }
+  })
+)
+---
+
+<Layout title='Sona Art'>
+  <div class='desc'>
+    <p>
+      This is my arctic fox sona <b>"Invisy"</b>.
+      <a href='https://cdn.itaf.uk/art/eutumned_ref.png' target='_blank' rel='noopener noreferrer'>Here is his ref sheet.</a>
+    </p>
+  </div>
+  <div class='grid'>
+    {
+      imgs.map((art, i) => (
+        <div class='art'>
+          <Image src={art.high} width={720} height={720} alt={art.file} loading={i < 6 ? 'eager' : 'lazy'} style={{ backgroundImage: `url(${art.low})`}} />
+          <div class='artist'><a href={art.artisturl} target='_blank' rel='noopener noreferrer'>@{art.artist}</a></div>
+        </div>
+      ))
+    }
+  </div>
+</Layout>

@@ -1,0 +1,40 @@
+.anims {
+  width: 50%;
+  margin: 0 auto;
+
+  .anim {
+    width: 100%;
+    text-align: center;
+    margin: 40px 0;
+
+    .title { font-size: 1.25em; font-weight: bold; }
+    
+    video { width: 100%; display: block; }
+
+    .info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      div {
+        background: var(--ctp-mantle);
+        padding: 5px 10px;
+        border: 2px solid var(--fg);
+        border-top: none;
+        border-radius: 0 0 calc(var(--rad) / 2) calc(var(--rad) / 2);
+      }
+      .source {
+        a {
+          display: flex;
+          text-decoration: none;
+          .icn {
+            svg { width: 100%; height: 100%; }
+            width: 30px;
+            height: 30px;
+            fill: currentColor;
+          }
+        }
+      }
+    }
+  }
+}

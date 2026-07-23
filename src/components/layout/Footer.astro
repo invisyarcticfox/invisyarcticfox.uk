@@ -1,0 +1,26 @@
+---
+import { siAstro, siCloudflareworkers } from 'simple-icons'
+import type { Gitea } from '~/types/int'
+import pkg from '~/../package.json'
+
+interface Props { isIndex:boolean }
+const { isIndex } = Astro.props
+
+const res = await fetch('https://itaf.uk/api/commit')
+const d:Gitea.Commit = await res.json()
+---
+		
+<footer transition:name='footer'>
+	<span class:list={['boop', 'count', !isIndex && 'hidden']}>total boops: <code>0</code></span>
+
+	<div class='bottom'>
+		<div class='left'>
+			<span class='icons'>
+				<a href='https://astro.build' target='_blank' rel='noopener noreferrer' set:html={siAstro.svg} />
+				<a href='https://workers.cloudflare.com/' target='_blank' rel='noopener noreferrer' set:html={siCloudflareworkers.svg} />
+			</span>
+			|
+			<span>v{pkg.version} [<a href={d.url} target='_blank' rel='noopener noreferrer'>{d.sha.slice(0,7)}</a>]</span>
+		</div>
+	</div>
+</footer>

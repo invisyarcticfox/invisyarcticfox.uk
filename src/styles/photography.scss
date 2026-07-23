@@ -1,0 +1,73 @@
+.desc {
+  text-align: center;
+  p { margin: 5px 0; }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  width: 75%;
+  margin: 20px auto;
+
+  .bg {
+    position: absolute;
+    display: flex;
+    font-size: 0.85em;
+    background: hsl(from var(--bg) h s calc(l * 2) / .5);
+    backdrop-filter: blur(4px);
+
+    svg { width: 1.2em; height: 1.2em; }
+  }
+
+  .photo {
+    &:has(.airport, .reg) img { border-radius: calc(var(--rad) / 2) calc(var(--rad) / 2) var(--rad) var(--rad); }
+    &:has(.airport):not(:has(.reg)) img { border-radius: calc(var(--rad) / 2) var(--rad) var(--rad) var(--rad); }
+    &:has(.reg):not(:has(.airport)) img { border-radius: var(--rad) calc(var(--rad) / 2) var(--rad) var(--rad); }
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4/3;
+      border-radius: var(--rad);
+      background-size: cover;
+    }
+
+    .airport {
+      top: 0;
+      left: 0;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px 6px 4px;
+      font-weight: bold;
+      border-radius: calc(var(--rad) / 2) 0;
+    }
+
+    .reg {
+      top: 0;
+      right: 0;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px 6px 10px;
+      font-weight: bold;
+      border-radius: 0 calc(var(--rad) / 2);
+    }
+
+    .info {
+      bottom: 0;
+      left: 0;
+      right: 0;
+      justify-content: space-around;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 0 0 var(--rad) var(--rad);
+
+      span { display: flex; align-items: center; gap: 4px; }
+    }
+  }
+}

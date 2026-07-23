@@ -1,7 +1,29 @@
 ---
+import { Image } from 'astro:assets'
 import Layout from '~/layouts/Layout.astro'
+
+import avt from '~/assets/imgs/avatar.png'
+import '~/styles/index.scss'
 ---
 
-<Layout>
-	
+<Layout title='InvisyArcticFox' isIndex>
+  <div class='top'>
+    <div class='avatar'>
+      <div class='boop nose' title='boop!' />
+      <Image src={avt} alt={'avatar'} width={512} quality={'max'} loading={'eager'} title={'art by @eutumned'} />
+    </div>
+    <p class='name'>Lucas.</p>
+    <p class='user'>@InvisyArcticFox</p>
+    <p class='bio'>Blender animator, photographer, aviation nerd.</p>
+  </div>
+  <div class='links'>
+    <a href='https://blog.itaf.uk' target='_blank' rel='noopener noreferrer'>Blog</a>
+    <a href='./about'>About Me</a>
+    <a href='./sonaart'>Sona Art</a>
+    <a href='./projects'>Projects</a>
+    <a href='./animations'>Animations</a>
+    <a href='./photography'>Photography</a>
+  </div>
 </Layout>
+
+<script src='../scripts/boop.ts' />

@@ -1,11 +1,29 @@
+---
+import Head from '~/components/layout/Head.astro'
+import Footer from '~/components/layout/Footer.astro'
+
+import '~/styles/_layout.scss'
+
+interface Props { title:string|[string,string], isIndex?:boolean }
+const { title, isIndex = false } = Astro.props
+
+function formatTitle(title:string|[string,string], isIndex:boolean=false):string {
+	if (isIndex) return 'ItAF | InvisyArcticFox'
+	if (typeof title === 'string') return `${title} - ItAF`
+	else return `${title[0]}: ${title[1]} - ItAF`
+}
+const htmlTitle = formatTitle(title, isIndex)
+---
+
+<!DOCTYPE html>
 <html lang='en'>
-	<head>
-		<meta charset='utf-8' />
-		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-		<meta name='viewport' content='width=device-width' />
-		<meta name='generator' content={Astro.generator} />
-	</head>
+	<Head title={htmlTitle} />
 	<body>
-    <slot />
+		<header class={isIndex ? 'index' : ''} transition:name='header'>
+			<h1>{ typeof title === 'string' ? !isIndex && title : title[0] }</h1>
+			{ typeof title !== 'string' ? ( <div class='sub'>{title[1]}</div> ) : '' }
+		</header>
+		<main> <slot /> </main>
+		<Footer {isIndex} />
 	</body>
 </html>

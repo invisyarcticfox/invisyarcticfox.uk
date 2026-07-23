@@ -1,0 +1,58 @@
+---
+import type { SimpleIcon } from 'simple-icons'
+import * as icn from 'simple-icons'
+import Layout from '~/layouts/Layout.astro'
+import { siTwitter } from '~/icons'
+
+import '~/styles/socials.scss'
+
+type Link = { link:string, name:string, icon:SimpleIcon, invert?:boolean  }
+type Links = {txt:string, links:Link[]}
+
+const links:Links[] = [
+  {
+    txt: 'Main socials',
+    links: [
+      { link: 'https://twitter.com/invisyarcticfox', name: 'Twitter', icon: siTwitter },
+      { link: 'https://bsky.app/profile/itaf.uk', name: 'Bluesky', icon: icn.siBluesky  },
+      { link: 'https://discord.com/users/470193291053498369', name: 'Discord', icon: icn.siDiscord  },
+      { link: 'https://t.me/invisyarcticfox', name: 'Telegram', icon: icn.siTelegram  },
+      { link: 'mailto:lucas@itaf.uk', name: 'Email', icon: icn.siGmail },
+    ]
+  },
+  {
+    txt: 'Misc socials',
+    links: [
+      { link: 'https://steamcommunity.com/id/invisyarcticfox', name: 'Steam', icon: icn.siSteam, invert:true },
+      { link: 'https://last.fm/user/invisyarcticfox', name: 'Last.FM', icon: icn.siLastdotfm },
+      { link: 'https://letterboxd.com/invisyarcticfox', name: 'Letterboxd', icon: icn.siLetterboxd, invert:true },
+      { link: 'https://instagram.com/lucas.mcq_', name: 'Instagram', icon: icn.siInstagram },
+    ]
+  }
+]
+---
+
+<Layout title='Socials'>
+  {
+    links.map(({ txt, links }) => (
+      <div class='links'>
+        <p>{txt}</p>
+        <ul>
+          {
+            links.map(({ link, name, icon, invert }) => (
+              <li>
+                <div class:list={[ 'icon', invert && 'invert' ]}>
+                  <svg viewBox='0 0 24 24'>
+                    <title>{icon.title}</title>
+                    <path d={icon.path} fill={`#${icon.hex}`} />
+                  </svg>
+                </div>
+                <a href={link} target='_blank' rel='noopener noreferrer'>{name}</a>
+              </li>  
+            ))
+          }
+        </ul>
+      </div>
+    ))
+  }
+</Layout>

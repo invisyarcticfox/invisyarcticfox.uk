@@ -1,0 +1,38 @@
+.desc {
+  p { margin: 5px 0; }
+  text-align: center;
+}
+
+.grid {
+  width: 75%;
+  margin: 0 auto;
+
+  .art {
+    $mLR: 5px;
+    display: inline-block;
+    position: relative;
+    width: calc((100% / 3) - ($mLR * 2));
+    vertical-align: middle;
+    margin: 10px $mLR;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: var(--rad);
+      background-size: cover;
+      background-position: center;
+    }
+    .artist {
+      position: absolute;
+      text-align: left;
+      font-weight: bold;
+      padding: 10px 15px;
+      left: 0;
+      bottom: 0;
+      background: hsl(from var(--bg) h s calc(l * 2) / .75);
+      backdrop-filter: blur(4px);
+      border-radius: 0 calc(var(--rad) / 2) 0 var(--rad);
+    }
+  }
+}

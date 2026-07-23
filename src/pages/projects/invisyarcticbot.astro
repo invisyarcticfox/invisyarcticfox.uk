@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets'
+import Layout from '~/layouts/Layout.astro'
+
+import '~/styles/projects.scss'
+
+import itab from '~/assets/projects/discord/itab.png'
+import types from '~/assets/projects/discord/types.png'
+import ops from '~/assets/projects/discord/ops.png'
+import rq from '~/assets/projects/discord/rq.png'
+import roul from '~/assets/projects/discord/roul.png'
+---
+
+<Layout title={['Projects', 'Discord Bot']}>
+  <div class='exp'>
+    <div>
+      This is my very own Discord bot, completely made from scratch.
+      <Image src={itab} alt={'itab'} width={360} loading={'eager'} />
+    </div>
+    <div>
+      If I'm being honest, the code is <b>extremely</b> messy and definitely needs a rewrite.
+      There's so many folders and functions and files to manage and remember where things are and it's just all over the place.
+    </div>
+    <div>
+      Initially, this bot was just meant to send the messages for my JetSpotter script and help view statistics,
+      like most common plane types or most common operators.
+      <Image src={types} alt={'types'} width={480} />
+      <Image src={ops} alt={'ops'} width={480} />
+    </div>
+    <div>
+      But now there's a whole bunch of other features! Some commands are just mirrors of cool Twitch bot commands I've seen before.
+      A couple examples are <code>/rq</code> and <code>/roulette</code>.
+      <Image src={rq} alt={'rq'} width={720} />
+      <Image src={roul} alt={'roul'} width={480} />
+    </div>
+  </div>
+</Layout>

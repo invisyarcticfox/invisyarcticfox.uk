@@ -1,7 +1,14 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "website",
-  "compatibility_date": "2025-01-05",
-  "compatibility_flags": [ "nodejs_compat" ],
-  "pages_build_output_dir": "./dist"
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "itafdotuk",
+	"compatibility_date": "2026-05-04",
+	"compatibility_flags": [ "global_fetch_strictly_public" ],
+	"main": "@astrojs/cloudflare/entrypoints/server",
+	"assets": { "directory": "./dist", "binding": "ASSETS" },
+	"observability": { "logs": { "enabled": true, "invocation_logs": true, "head_sampling_rate": 1 } },
+	"workers_dev": true,
+	"preview_urls": false,
+
+	"d1_databases": [{ "binding": "DB", "database_name": "website", "database_id": "5e19df86-7b9c-4900-ab4c-8ae378804d2a", "remote": true }],
+	"ratelimits": [{ "name": "BOOP_RATELIMIT", "namespace_id": "1002", "simple": { "limit": 20, "period": 10 } }],
 }

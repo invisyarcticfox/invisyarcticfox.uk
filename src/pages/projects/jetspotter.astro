@@ -1,0 +1,69 @@
+---
+import { Image } from 'astro:assets'
+import { Code } from 'astro:components'
+import Layout from '~/layouts/Layout.astro'
+
+import '~/styles/projects.scss'
+
+import jsv1 from '~/assets/projects/jetspotter/v1.png'
+import jsv1d6 from '~/assets/projects/jetspotter/v1-6.png'
+import jsv2d4d2 from '~/assets/projects/jetspotter/v2-4-2.png'
+import seenjson from '~/assets/projects/jetspotter/seen.jsonc?raw'
+---
+
+<Layout title={['Projects', 'JetSpotter']}>
+  <div class='exp'>
+    <div>This project is the one I am most proud of.</div>
+    <div>
+      Using <a href='https://airplanes.live/api-guide/' target='_blank' rel='noopener noreferrer'>airplanes.live</a>,
+      I am able to fetch every single plane within a 15 <i>nautical</i> mile radius.
+    </div>
+    <div>
+      Thankfully, to save me from having to download a compiled database, this API has it's own. Using the <code>dbFlag</code> object in the resulting JSON,
+      it lets people differenciate normal planes from "special" planes, such as <a href='https://www.faa.gov/pilots/ladd' target='_blank' rel='noopener noreferrer'>LADD</a> or just simply military.
+    </div>
+    <div>
+      Although my original idea for this project was just plainly military,
+      over time I've seen interesting planes that are not military, such as the <a href='https://en.wikipedia.org/wiki/Airbus_BelugaXL' target='_blank' rel='noopener noreferrer'>Airbus Beluga XL</a>.
+    </div>
+    <div>
+      Originally, before I even got a Raspberry Pi, I used
+      <a href='https://github.com/vvanouytsel/jetspotter' target='_blank' rel='noopener noreferrer'>this JetSpotter script</a>
+      made by <b>vvanouytsel</b>. It works fine, but required me to have a
+      terminal window open at all times, and obviously couldn't function when my
+      PC was off for when I go to sleep. Eventually, I did build my own custom
+      version, but it was just one massive JavaScript file with plaintext env
+      variables like my co-ordinates and the Discord webhook URL.
+    </div>
+    <div>
+      The very first message sent by my own script looked like this
+      <Image src={jsv1} alt={'jsv1'} width={360} loading={'eager'} />
+      Extremely simple, just letting me know what plane it is and some general information.
+      I eventually started to add more information like speed, altitude, and co-ordinates,
+      as well as a counter for how many times that plane had been previously seen.
+      <Image src={jsv1d6} alt={'jsv1.6'} width={360} />
+      At first, this was stored in JSON. Just a loooong array of plane hex codes and
+      a timestamp for when the plane was last seen, and how many times previously.
+      <Code lang={'json'} code={seenjson} theme={'catppuccin-mocha'} />
+      But as the project grew, both in terms of how much code was being written and
+      how many unique planes I was seeing, I switched to a local SQL database so that
+      the code doesn't have to read and write thousands of JSON lines just to update
+      one plane.
+    </div>
+    <div>
+      And now the messages look like this!
+      <Image src={jsv2d4d2} alt={'jsv2d4d2.4.2'} width={480} />
+      Very detailed information like cloud coverage, if I've photographed the plane
+      before, relative time and even some buttons for viewing on maps. And at this
+      point, I had even made my own bot! Not only for sending these messages but also
+      a bunch of other stuff!
+    </div>
+    <div>
+      I am <i>almost</i> always updating this script, adding new features or fixing some bugs and whatnot,
+      either visual stuff for the Discord embeds or just backend stuff to make the code a bit better.
+      But I only really push updates when I feel as though it's needed. I'll make a change locally that's tiny,
+      and then I'll come across something bigger later on and then I'll push that as well,
+      and that could take a few months!
+    </div>
+  </div>
+</Layout>

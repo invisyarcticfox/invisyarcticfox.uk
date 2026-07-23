@@ -1,0 +1,60 @@
+---
+import { Image } from 'astro:assets'
+import Layout from '~/layouts/Layout.astro'
+
+import portrait from '~/assets/imgs/portrait.png'
+import '~/styles/about.scss'
+---
+
+<Layout title='About Me'>
+  <div class='cont'>
+    <Image class={'portrait'} src={portrait} alt={'portrait'} height={720} quality={'max'} loading={'eager'} />
+    <div class='txt'>
+      <div class='top'>Hey, I'm <b>Lucas</b><span class='colonthree' /></div>
+      <div style='margin:0;'>I'm a <span class='age'>21</span> year old animator, photographer, aviation nerd and typescript writer.</div>
+      <div>
+        I animate using <b><a href='https://blender.org' target='_blank' rel='noopener noreferrer'>Blender</a></b>,
+        I've been using it for years now, but honestly, I don't think I'm <i>that</i> great at animating anyway.
+        I was never taught animation and I don't yet fully even understand the funademental basics, I can't even animate a walk cycle.
+      </div>
+      <div>
+        As for photography, the camera I use is the <b>Canon EOS R50</b>, and before that I used a <b>Panasonic Lumix DC-FZ82</b>.
+        I was also never taught photography, so I'm entirely self-taught here too.
+        I mostly just take pictures of planes that happen to fly over, but only really if they're military.<br>
+        I take pictures of my dog when I walk her too, but my general focus is planes.
+        I don't really go out to airports, I just take them from my back garden and hope they're close enough to get a good picture.
+      </div>
+      <div>
+        To help with taking these pictures, I wrote some code that runs on my <b>Raspberry Pi 4</b>.
+        The Pi sends a request to an API and fetches all planes within a 15 <i>nautical</i> mile radius of my location, it does this once every 30 seconds.<br>
+        If the plane is military in the API's database it sends a notification to both my phone and my private Discord server detailing information like its type and operator.<br>
+        I have a much more detailed explanation of it <a href='/projects/jetspotter'>here</a>.
+      </div>
+      <div>
+        And as for filmmaking, although I've never been on a film set or been a part of anything huge,
+        I <i>have</i> been to Pinewood Studios to help film for a documantary, so that's pretty cool!
+        At the moment, I do volunteer at a local theatre that often does some filming of stuff, so that's pretty cool too.<br>
+        Eventually, I would like to be able to actually be on film sets. Acting is never gonna be my thing but being able to do stuff behind the camera would be great.
+        Something I've always wanted to do is be the guy who records "B-Roll" for behind the scenes videos and such,
+        especially if I get to record stuff like in <a href='https://www.youtube.com/watch?v=OwDfxYDSeDU' target='_blank' rel='noopener noreferrer'>this video for <b>The Grand Budapest Hotel</b></a> or <a href='https://www.youtube.com/watch?v=5OGWPtaUOok' target='_blank' rel='noopener noreferrer'>this video for <b>The Adventures of Tintin</b></a>.
+      </div>
+      <div>As for web stuff, I typically write Typescript/Javascript for backend stuff and I usually use <a href='https://astro.build' target='_blank' rel='noopener noreferrer'>Astro</a> or <a href='https://expressjs.com' target='_blank' rel='noopener noreferrer'>Express</a> for frontend.</div>
+      <div>
+        Ssome of my favourite music artists are <b><a href='https://www.last.fm/music/Kiltro' target='_blank' rel='noopener noreferrer'>Kiltro</a></b>, <b><a href='https://www.last.fm/music/Crosa+Rosa' target='_blank' rel='noopener noreferrer'>Crosa Rosa</a></b> and <b><a href='https://www.last.fm/music/Blood+Cultures' target='_blank' rel='noopener noreferrer'>Blood Cultures</a></b>.<br>
+        I listen to <b>a lot</b> of different genres, spanning from <b>Kiltro</b> who do Chilean folk, to <b>Crosa Rosa</b> who do psychedelic rock, to <b>The Correspondents</b> who do electro swing and then all the way to <b>Maria Asahina</b> who does J-Pop.
+      </div>
+      <div>
+        And finally, I'd thought I'd mention that <i>yes</i> I am a furry if it weren't blatantly obvious.
+        I don't even know how long I've been a furry for but at least since 2018 <i>(or that's what the date on my oldest ref sheet tells me)</i>.<br>
+        But I much prefer to be called by my IRL name rather than my sona's name.
+        I'm not entirely sure why, I still use the full <b>InvisyArcticFox</b> username for all social media I'm on,
+        but if I can, I'll always set my display name to my IRL name.
+        I guess I could always rename my sona to have the same first name, but it honestly doesn't have a good ring to it,
+        and I'd also have to update my username <i>everywhere</i>.<br>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script src='../scripts/colonthree.ts' />
+<script src='../scripts/age.ts' />

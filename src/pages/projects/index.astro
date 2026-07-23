@@ -1,0 +1,99 @@
+---
+import { env } from 'cloudflare:workers'
+import { Octokit } from 'octokit'
+import { siGit, siTypescript, siJavascript, siPython, type SimpleIcon } from 'simple-icons'
+import Layout from '~/layouts/Layout.astro'
+import type { Gitea } from '~/types/int'
+
+import '~/styles/projects.scss'
+
+const languageIcons:Record<string, SimpleIcon> = {
+  TypeScript: siTypescript,
+  JavaScript: siJavascript,
+  Python: siPython
+}
+
+const octokit = new Octokit({ auth: env.GITHUB_API_KEY })
+const repos = (await octokit.request('GET /users/{username}/repos', { username: 'invisyarcticfox' })).data
+const projects = repos.filter(repo => repo.topics?.includes('project')).toReversed()
+
+const d:Gitea.Project[] = await Promise.all(
+  projects.map(async repo => {
+    try {
+      const [{ data:pkg }, { data:langs }] = await Promise.all([
+        octokit.request('GET /repos/{owner}/{repo}/contents/{path}', { owner: 'invisyarcticfox', repo: repo.name, path: 'package.json', ref: repo.default_branch }),
+        octokit.request('GET /repos/{owner}/{repo}/languages', { owner: 'invisyarcticfox', repo: repo.name })
+      ])
+      if (!('content' in pkg)) throw new Error('package.json not found')
+
+      const pkgJson:{version:string} = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(pkg.content), c => c.charCodeAt(0))))
+
+      return {
+        title: repo.name,
+        summary: repo.description ?? '',
+        created: repo.created_at ?? '',
+        version: pkgJson.version,
+        branch: repo.default_branch ?? '',
+        languages: Object.keys(langs as Record<string,number>)
+      }
+    } catch (error) {
+      return {
+        title: repo.name,
+        summary: repo.description ?? '',
+        created: repo.created_at ?? '',
+        version: 'unknown',
+        branch: repo.default_branch ?? '',
+        languages: []
+      }
+    }
+  })
+)
+---
+
+<Layout title='Projects'>
+  <div class='projects'>
+    {
+      d.map(({ title, summary, created, version, languages }) => (
+        <div class='project'>
+          <div class='top'>
+            <div class='title'>{title}</div>
+            <div class='icn'>
+              <a href={`https://git.itaf.uk/lucas/${title.toLowerCase()}`} target='_blank' rel='noopener noreferrer'>
+                <svg viewBox='0 0 24 24' fill={`#${siGit.hex}`}>
+                  <title>Source code</title>
+                  <path d={siGit.path} />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div class='summ'>{summary}</div>
+          <div class='meta'>
+            <div class='created'>
+              Created: <time datetime={created}>{new Date(created).toLocaleDateString('en-gb', { timeZone: 'Europe/London', dateStyle: 'long' })}</time>
+            </div>
+            <div class='ver'>Version: <code>v{version}</code></div>
+            <div class='langs'>
+              Languages:
+              {
+                languages.map(lang => {
+                  const icon = languageIcons[lang]
+                  if (!icon) return ( <span>{lang}</span> )
+
+                  return (
+                    <svg viewBox='0 0 24 24' fill={`#${icon.hex}`}>
+                      <title>{lang}</title>
+                      <path d={icon.path} />
+                    </svg>
+                  )
+                })
+              }
+            </div>
+          </div>
+
+          <a class='more' href={`./${title.toLowerCase()}`}>More...</a>
+        </div>
+      ))
+    }
+  </div>
+</Layout>

@@ -1,0 +1,80 @@
+---
+import { Image, getImage } from 'astro:assets'
+import { env } from 'cloudflare:workers'
+import { Aperture, ZoomIn, Timer, Eye, MapPin } from '@lucide/astro'
+import Layout from '../layouts/Layout.astro'
+import type { D1, AirportData } from '~/types/ext'
+import '~/styles/photography.scss'
+
+const airportCache = new Map<string, Promise<string|null>>
+async function getAirportName(icao:string):Promise<string|null> {
+  if (airportCache.has(icao)) return airportCache.get(icao)!
+
+  const req = fetch(`https://airport-data.com/api/ap_info.json?icao=${icao}`).then(async res => {
+    if (!res.ok) return null
+    const data:AirportData = await res.json()
+    return data.name ?? null
+  }).catch(() => null)
+
+  airportCache.set(icao, req)
+  return req
+}
+
+type Img = D1.Photography & { img: { high:string, low:string }, airport:string|null }
+
+const { results } = await env.DB.prepare('SELECT * FROM photography ORDER BY date ASC').all<D1.Photography>()
+const imgs:Img[] = await Promise.all(
+  results.map(async photo => {
+    const src = `https://cdn.itaf.uk/photography/${photo.folder ?? ''}${photo.file}`
+    const high = await getImage({ src, width: 960, height: 720, quality: 80, format: 'webp' })
+    const low = await getImage({ src, width: 320, height: 240, quality: 40, format: 'jpg' })
+    const airport = photo.icao ? await getAirportName(photo.icao) : null
+
+    return {
+      ...photo,
+      img: { high:high.src, low:low.src },
+      airport
+    }
+  })
+)
+---
+
+<Layout title='Photography'>
+  <div class='desc'>
+    <p>I used a <b>Canon EOS R50</b> for all of these.</p>
+    <p>It is my second camera, my first camera was a <b>Lumix DC-FZ82</b>.</p>
+  </div>
+
+  <div class='grid'>
+    {
+      imgs.map((photo, i) => (
+        <div class='photo'>
+          {
+            (photo.iata || photo.icao) && (
+              <span class='airport bg' title={photo.airport}>
+                <MapPin />
+                {
+                  photo.iata ? (
+                    <a href={`https://www.flightradar24.com/data/airports/${photo.iata.toLowerCase()}`} target='_blank' rel='noopener noreferrer'>
+                      {[photo.iata?.toUpperCase(), photo.icao?.toUpperCase()].filter(Boolean).join('/')}
+                    </a>
+                  ) : ( <span>{photo.icao?.toUpperCase()}</span> )
+                }
+              </span>
+            )
+          }
+          <span class='reg bg'>
+            <a href={`https://www.planespotters.net/photos/reg/${photo.reg}`} target='_blank' rel='noopener noreferrer'>{photo.reg}</a>
+          </span>
+          <Image src={photo.img.high} alt={photo.file} width={960} height={720} loading={i < 6 ? 'eager' : 'lazy'} style={{ backgroundImage: `url(${photo.img.low})` }} />
+          <div class='info bg'>
+            <span title='iso'><Eye />{photo.iso}</span>
+            <span title='focal length'><ZoomIn />{photo.focallength}mm</span>
+            <span title='aperture'><Aperture /><span style='gap: 0;'><i>f</i>/{photo.aperture.toFixed(1)}</span></span>
+            <span title='shutter speed'><Timer />{photo.shutter_num}/{photo.shutter_den}</span>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</Layout>

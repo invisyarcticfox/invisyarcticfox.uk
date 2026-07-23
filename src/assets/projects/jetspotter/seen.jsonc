@@ -1,0 +1,26 @@
+[
+  {
+    "hex": "449825",
+    "seenCount": 1,
+    "lastSeen": "xxxx-xx-xxTxx:xx:xx.xxxZ"
+    // Belgian Air Force Dassault Falcon 7X
+  },
+  {
+    "hex": "706216",
+    "seenCount": 1,
+    "lastSeen": "xxxx-xx-xxTxx:xx:xx.xxxZ"
+    // Kuwait Air Force Boeing C-17 Globemaster III
+  },
+  {
+    "hex": "710385",
+    "seenCount": 1,
+    "lastSeen": "xxxx-xx-xxTxx:xx:xx.xxxZ"
+    // Royal Saudi Air Force Lockheed C-130 Hercules
+  },
+  {
+    "hex": "43c5e8",
+    "seenCount": 36,
+    "lastSeen": "xxxx-xx-xxTxx:xx:xx.xxxZ"
+    // Royal Air Force Airbus A400M Atlas
+  }
+]

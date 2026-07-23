@@ -1,0 +1,32 @@
+@import './catppuccin.css';
+
+:root {
+  --bg: var(--ctp-crust);
+  --fg: var(--ctp-text);
+  --acc: var(--ctp-green);
+  --trans: 200ms ease;
+  --rad: 25px;
+  --f-main: var(--font-roboto, Arial, Helvetica, sans-serif);
+  --f-mono: var(--font-roboto-mono, monospace, consolas);
+}
+
+
+html { font-size: 25px; }
+body {
+  display: flex;
+  flex-direction: column;
+  color: var(--fg);
+  background: var(--bg);
+  font-family: var(--f-main);
+  margin: 0;
+  min-height: 100vh;
+}
+
+main { flex: 1 }
+code, time { font-family: var(--font-roboto-mono); letter-spacing: -1px;  }
+.astro-code { font-size: 0.65em; padding: 10px; border-radius: calc(var(--rad) / 2); }
+
+::selection { color: var(--bg); background: var(--fg); }
+
+a,a:visited { color: var(--fg); transition: color var(--trans); }
+a:hover { color: var(--acc); transition: color var(--trans); }

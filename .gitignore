@@ -1,6 +1,9 @@
-dist/
-.astro/
-node_modules/
-.wrangler/
-package-lock.json
+/.astro
+/.wrangler
+/dist
+/node_modules
+
+.dev.vars
 .env
+package-lock.json
+secrets.json
